@@ -1,0 +1,240 @@
+/*회원 분류*/
+CREATE table t_member (
+   email varchar2(50) not null,
+   t_auth number(1) default 2 not null,
+   constraint t_member_pk primary key (email)
+);
+
+/*회원 상세 정보*/
+CREATE table t_member_detail (
+   email varchar2(50) not null,
+   td_nickname varchar2(30) not null,
+   td_password varchar2(50) not null,
+   td_profile blob,
+   td_score number(5) default 0 not null, /* default 0 지정 필요*/
+   td_reg_date date not null,
+   td_modify_date date,
+   td_gender number(1) not null,
+   td_content clob,
+   td_birth varchar2(10) not null,
+   td_good number(5) default 0 not null, /* default 0 지정 필요*/
+   td_bad number(5) default 0 not null, /* default 0 지정 필요*/
+   constraint t_member_detail_pk primary key (email),
+   constraint t_member_detail_fk1 foreign key (email) references t_member (email)
+);
+
+/*즐겨찾기*/
+CREATE table favorite (
+   f_num number not null, /*pk인 f_num 필요, 시퀀스도!!*/
+   f_category number(1) not null, /*1:장소, 2:일정, 3:회원*/
+   f_code varchar2(50) not null,
+   email varchar2(50) not null,
+   constraint favorite_pk primary key (f_num),
+   constraint favorite_fk1 foreign key (email) references t_member (email)
+);
+
+CREATE sequence favorite_seq;
+
+/*일정*/
+CREATE table schedule (
+   s_num number not null,
+   s_title varchar2(60) not null,
+   s_share number(1) default 0 not null, /*기본값0(=비공개)*/
+   s_finish number(1) not null,
+   s_style number(1) default 0 not null, /*기본값0(=미지정)*/
+   s_traffic varchar2(30) default 0 not null, /*기본값0(=미지정)*/
+   s_color varchar2(7),
+   email varchar2(50) not null,
+   s_tag varchar2(300),
+   s_startdate varchar2(10),
+   s_enddate varchar2(10),
+   s_content clob,
+   s_photo1 blob,
+   s_photo2 blob,
+   s_photo3 blob,
+   s_photo4 blob,
+   s_photo5 blob,
+   s_photo6 blob,
+   s_photo7 blob,
+   s_photo8 blob,
+   s_photo9 blob,
+   s_photo10 blob,   
+   constraint schedule_pk primary key (s_num),
+   constraint schedule_fk1 foreign key (email) references t_member (email)
+);
+
+CREATE sequence schedule_seq;
+
+/*일정 상세*/
+CREATE table schedule_detail (
+   s_num number not null,
+   sd_num number not null,
+   sd_code varchar2(50) not null, /* 관광지코드, 장소코드 varchar2로 수정 필요*/
+   sd_day number(3) not null,
+   sd_starttime varchar2(5) not null,
+   sd_endtime varchar2(5) not null,
+   sd_memo varchar2(300),
+   sd_money number(8),
+   constraint schedule_detail_pk primary key (sd_num),
+   constraint schedule_detail_fk1 foreign key (s_num) references schedule (s_num)
+);  
+
+CREATE sequence schedule_detail_seq;
+
+/*공유 게시판*/
+CREATE table share (
+   num number not null,
+   title varchar2(45) not null,
+   content varchar2(300) not null,
+   reg_date date not null,
+   modify_date date,
+   email varchar2(50) not null,
+   thumb blob,
+   photo2 blob,
+   photo3 blob,
+   map blob,
+   s_num number,
+   constraint share_pk primary key (num),
+   constraint share_fk1 foreign key (email) references t_member (email),
+   constraint share_fk2 foreign key (s_num) references schedule (s_num)
+);
+
+CREATE sequence share_seq;
+
+/*공유 게시판 댓글*/
+CREATE table share_reply (
+   num number not null,
+   sr_num number not null,
+   sr_content varchar2(300) not null,
+   sr_date date not null,
+   email varchar2(50) not null,
+   constraint share_reply_pk primary key (sr_num),
+   constraint share_reply_fk1 foreign key (num) references share (num),
+   constraint share_reply_fk2 foreign key (email) references t_member (email)
+);
+
+CREATE sequence share_reply_seq;
+
+/*동행 게시판*/
+CREATE table gowith (
+   go_num number(6) not null,
+   go_plan number not null, /*go_day -> go_plan*/
+   email varchar2(50) not null,
+   go_member varchar2(3) not null,
+   go_startdate varchar2(10) not null, /* startdate, enddate로 이름 통일 */
+   go_enddate varchar2(10) not null,
+   go_deadline varchar2(10) not null, /* gorec_end -> go_deadline */
+   go_area varchar2(30) not null,
+   go_photo1 blob,
+   go_photo2 blob,
+   go_photo3 blob,
+   go_photo4 blob,
+   go_gen number(1) not null,
+   go_age number(1) not null,
+   go_say varchar2(4000),
+   go_type number(1) not null,
+   go_status number(1) not null, /*gorec_auth -> go_status*/
+   constraint gowith_pk primary key (go_num),
+   constraint gowith_fk1 foreign key (go_plan) references schedule (s_num),
+   constraint gowith_fk2 foreign key (email) references t_member (email)
+);
+
+CREATE sequence gowith_seq;
+
+/*동행 신청*/ 
+CREATE table applicant ( /* ??? 신청 번호는 없어도 되는지 */
+   email varchar2(50) not null,
+   ap_member number(3) not null,
+   ap_photo1 blob,
+   ap_photo2 blob,
+   ap_photo3 blob,
+   ap_photo4 blob,
+   ap_why varchar2(300) not null,
+   ap_num number(6) not null,
+   ap_status number(1) not null, /*goapp_auth -> ap_status*/
+   constraint applicant_pk primary key (email),
+   constraint applicant_fk1 foreign key (ap_num) references gowith (go_num),
+   constraint applicant_fk2 foreign key (email) references t_member (email)
+);
+
+/*조언 게시판*/
+CREATE table advice (
+   adv_num number not null, /*시퀀스로 자동 생성하므로  number 자릿수 제한 X*/
+   adv_title varchar2(100) not null,
+   email varchar2(50) not null,
+   adv_date date not null,
+   adv_phone varchar2(15) not null,
+   adv_like number(6),
+   adv_dep varchar2(10) not null,
+   adv_arr varchar2(10) not null,
+   s_num number,
+   constraint advice_pk primary key (adv_num),
+   constraint advice_fk1 foreign key (s_num) references schedule (s_num),
+   constraint advice_fk2 foreign key (email) references t_member (email)
+);
+
+CREATE sequence advice_seq;
+
+/*조언 댓글*/
+CREATE table advice_reply (
+   adv_num number not null, /* adv_re_num -> adv_num, 시퀀스로 자동 생성하므로  number 자릿수 제한 X*/
+   email varchar2(50) not null,
+   ar_date date not null,
+   ar_like number(6),
+   ar_startdate varchar2(10) not null, /* startdate, enddate로 이름 통일 */
+   ar_enddate varchar2(10) not null,
+   ar_comment varchar2(4000),
+   s_num number,
+   ar_num number(6) not null, /* pk_num -> ar_num */
+   constraint advice_reply_pk primary key (ar_num),
+   constraint advice_reply_fk1 foreign key (adv_num) references advice (adv_num),
+   constraint advice_reply_fk2 foreign key (email) references t_member (email),
+   constraint advice_reply_fk3 foreign key (s_num) references schedule (s_num)
+);
+
+CREATE sequence advide_reply_seq;
+
+/*조언 상세 일정*/
+CREATE table advice_detail (
+   ad_num number not null, /* 조언 게시글 번호 or 조언 댓글 번호 둘 중 하나를 받음 */
+   ad_code number(10) not null, /* ??? 관광지 코드 varchar2로 수정 필요 */
+   ad_day number(3) not null,
+   ad_starttime varchar2(5) not null,
+   ad_endtime varchar2(5) not null,
+   ad_memo varchar2(300),
+   ad_money number(8),
+   status number(1) not null, /* 조언 게시글 번호인지 댓글 번호인지 구분하기 위함 */
+);
+
+/*공유 게시판*/
+create table share_write(
+   num number not null, /*글번호*/
+   title VARCHAR2(45) not null, /*제목*/
+   content VARCHAR2(300),
+   reg_date date not null,
+   modify_date date,
+   email VARCHAR2(50) not null,
+   thumb blob,
+   photo2 blob,
+   photo3 blob,
+   s_num number not null,
+   constraint share_write_pk primary key (num),
+   constraint share_write_fk2 foreign key (email) references t_member (email),
+   constraint share_write_fk3 foreign key (s_num) references schedule (s_num)
+);
+
+create sequence share_write_seq;
+
+/*게시판 댓글*/
+create table share_reply(
+   sr_num number not null,
+   sr_content VARCHAR2(300) not null,
+   sr_date date not null,
+   email VARCHAR2(50) not null,
+   num number not null,
+   constraint share_reply_pk primary key (sr_num),
+   constraint share_reply_fk2 foreign key (email) references t_member (email),
+   constraint share_reply_fk3 foreign key (num) references share_write (num)
+);
+
+create sequence share_reply_seq;

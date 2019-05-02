@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper   
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.spring.gowith.dao.GowithMapper">
+	<select id="selectList" parameterType="map" resultType="gowithCommand">
+		SELECT
+		*
+		FROM (SELECT
+		a.*,
+		rownum rnum
+		FROM (select g.*,(CEIL(TO_DATE(g.go_deadline) - sysdate)) dday, t.td_nickname, nvl(g.go_member-app_cnt,g.go_member) as go_status from gowith g left outer join (select go_num, sum(app_member) app_cnt from gowith_app where app_status=1 GROUP BY go_num) b
+				on g.go_num = b.go_num
+				JOIN t_member_detail t
+				ON g.email = t.email
+		<where>
+			<if test="keyword != '' and keyfield == 'td_nickname'">
+				td_nickname like '%' || #{keyword} || '%'
+			</if>
+			<if test="keyword != '' and keyfield == 'go_area'">
+				go_area like '%' || #{keyword} || '%'
+			</if>
+			<if test="keyword != '' and keyfield == 'go_type'">
+				go_type like '%' || #{keyword} || '%'
+			</if>
+			<if test="keyword != '' and keyfield == 'all'">
+				td_nickname like '%' || #{keyword} || '%' or
+				go_area like '%' || #{keyword} || '%' or
+				go_type like '%' || #{keyword} || '%'
+			</if>
+		</where>
+		ORDER BY g.go_num DESC)a)
+		<![CDATA[
+		WHERE rnum >= #{start} AND rnum <= #{end}
+		]]>
+	</select>
+
+	<select id="selectRowCount" parameterType="map" resultType="integer">
+		SELECT
+		COUNT(*)
+		FROM gowith g JOIN t_member_detail t
+		ON g.email = t.email
+		<where>
+			<if test="keyword != '' and keyfield == 'td_nickname'">
+				td_nickname like '%' || #{keyword} || '%'
+			</if>
+			<if test="keyword != '' and keyfield == 'go_area'">
+				go_area like '%' || #{keyword} || '%'
+			</if>
+			<if test="keyword != '' and keyfield == 'go_type'">
+				go_type like '%' || #{keyword} || '%'
+			</if>
+			<if test="keyword != '' and keyfield == 'all'">
+				td_nickname like '%' || #{keyword} || '%' or
+				go_area like '%' || #{keyword} || '%' or
+				go_type like '%' || #{keyword} || '%'
+			</if>
+		</where>
+	</select>
+	<!-- 동행 신청 남은 인원 수 구하기 -->
+	<select id="selectGowith" parameterType="integer"
+		resultType="gowithCommand">
+		SELECT g.*, t.td_nickname,t.td_gender,t.td_birth,t.td_score, nvl(g.go_member-app_cnt,g.go_member) as go_status 
+                FROM gowith g 
+                            left outer join (select go_num, sum(app_member) app_cnt from gowith_app where app_status=1 GROUP BY go_num) b
+                            on g.go_num = b.go_num
+				            JOIN t_member_detail t
+				            ON g.email = t.email AND g.go_num =#{go_num}
+               ORDER BY g.go_num
+	</select>
+	
+	<!-- 동행글 수정 -->
+	<update id="update" parameterType="gowithCommand">
+
+		UPDATE gowith SET
+		go_member=#{go_member},go_startdate=#{go_startdate},go_enddate=#{go_enddate},go_deadline=#{go_deadline},go_area=#{go_area},go_photo1=#{go_photo1},go_photo2=#{go_photo2},go_photo3=#{go_photo3},go_photo4=#{go_photo4},go_gen=#{go_gen},go_age=#{go_age},go_say=#{go_say},go_type=#{go_type},email=#{email}
+		WHERE go_num=#{go_num}
+
+	</update>
+	
+</mapper>
+
+
+
+
+
+
+

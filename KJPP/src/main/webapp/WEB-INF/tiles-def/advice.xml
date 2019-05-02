@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+	<definition name="adviceList" extends="main">
+		<put-attribute name="title" value="조언 목록" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/advice/adviceList.jsp" />
+	</definition>
+
+	 <definition name="adviceWrite" extends="main">
+		<put-attribute name="title" value="글쓰기" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/advice/adviceWrite.jsp" />
+	</definition> 
+	
+	<definition name="adviceDetail" extends="main">
+		<put-attribute name="title" value="조언 상세" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/advice/adviceDetail.jsp" />
+	</definition>
+	
+	<definition name="adviceModify" extends="main">
+		<put-attribute name="title" value="조언 수정" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/advice/adviceModify.jsp" />
+	</definition>  
+	
+	<definition name="replyWrite" extends="main">
+		<put-attribute name="title" value="댓글 등록" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/advice/replyWrite.jsp" />
+	</definition> 
+	
+	<!-- 팝업 -->
+	<definition name="adviceSearchView" extends="popup">
+		<put-attribute name="title" value="일정등록" />
+		<put-attribute name="body" value="/WEB-INF/views/advice/popup/adviceSearchView.jsp" />
+	</definition>
+	<definition name="adviceSearchAdd" extends="popup">
+		<put-attribute name="title" value="일정등록" />
+		<put-attribute name="body" value="/WEB-INF/views/advice/popup/adviceSearchAdd.jsp" />
+	</definition>
+	<definition name="adviceDetailPopup" extends="popup">
+		<put-attribute name="title" value="일정등록" />
+		<put-attribute name="body" value="/WEB-INF/views/advice/popup/adviceDetailPopup.jsp" />
+	</definition>	
+	<definition name="adviceModifyPopup" extends="popup">
+		<put-attribute name="title" value="일정등록" />
+		<put-attribute name="body" value="/WEB-INF/views/advice/popup/adviceModifyPopup.jsp" />
+	</definition>		
+	<definition name="adviceDeletePopup" extends="popup">
+		<put-attribute name="title" value="일정등록" />
+		<put-attribute name="body" value="/WEB-INF/views/advice/popup/popupDelete.jsp" />
+	</definition>
+	
+	<!-- 댓글 -->
+	<definition name="replyWrite" extends="main">
+		<put-attribute name="title" value="조언 등록" />
+		<put-attribute name="body" value="/WEB-INF/views/advice/replyWrite.jsp" />
+	</definition> 
+	
+</tiles-definitions>		

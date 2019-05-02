@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper   
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="kr.spring.calendar.dao.CalendarMapper">
+ 	
+ 	<!-- 일정 -->
+	<insert id="insert" parameterType="calendarCommand">
+		INSERT INTO schedule(
+ 		   s_num,
+ 		   s_title,
+ 		   s_share,
+ 		   s_finish,
+ 		   s_style,
+ 		   s_traffic,
+ 		   s_color,
+ 		   email,
+ 		   s_tag,
+ 		   s_startdate,
+ 		   s_enddate,
+ 		   s_content,
+ 		   s_photo1, s_photo2, s_photo3, s_photo4, s_photo5, s_photo6, s_photo7, s_photo8, s_photo9, s_photo10
+		) 
+ 		VALUES (
+ 		   schedule_seq.nextval,
+ 		   #{s_title},
+ 		   #{s_share},
+ 		   #{s_finish},
+ 		   #{s_style},
+ 		   #{s_traffic},
+ 		   #{s_color},
+ 		   #{email},
+ 		   #{s_tag},
+ 		   #{s_startdate},
+ 		   #{s_enddate},
+ 		   #{s_content},
+ 		   #{s_photo1}, #{s_photo2}, #{s_photo3}, #{s_photo4}, #{s_photo5}, #{s_photo6}, #{s_photo7}, #{s_photo8}, #{s_photo9}, #{s_photo10}
+ 		)
+	</insert> 
+	
+	<select id="selectList" parameterType="map" resultType="calendarCommand">
+		SELECT 
+			*
+		FROM (SELECT 
+				a.*, 
+				rownum rnum
+			FROM (SELECT 
+					*
+				FROM schedule s
+				<where>
+					<if test="keyword != '' and keyfield == 's_title'">
+						s.s_title LIKE '%' || #{keyword} || '%'
+					</if>
+					<if test="keyword != '' and keyfield == 's_tag'">
+						s.s_tag LIKE '%' || #{keyword} || '%'
+					</if>
+				</where>
+				ORDER BY s_num DESC)a) 
+		<![CDATA[
+		WHERE rnum >= #{start} AND rnum <= #{end}
+		]]>
+	</select>
+ 	
+ 	<select id="selectRowCount" parameterType="map" resultType="integer">
+ 		SELECT 
+ 			COUNT(*)
+ 		FROM schedule
+ 		<where>
+			<if test="keyword != '' and keyfield == 's_title'">
+				s_title LIKE '%' || #{keyword} || '%'
+			</if>
+			<if test="keyword != '' and keyfield == 's_tag'">
+				s_tag LIKE '%' || #{keyword} || '%'
+			</if>
+		</where>
+ 	</select>
+ 	
+ 	<update id="update"></update>
+ 	
+</mapper>

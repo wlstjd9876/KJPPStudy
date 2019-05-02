@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper   
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="kr.spring.share.dao.ShareMapper">  
+
+	<select id="selectList" parameterType="map" resultType="shareCommand">
+		SELECT
+		   *
+		FROM (SELECT
+		        a.*,
+		        rownum rnum
+		      FROM (SELECT
+		              b.num,
+		              <![CDATA[
+		              REPLACE(REPLACE(b.title,'<','&lt;'),'>','&gt;') title,
+		              ]]>
+		              b.reg_date,
+		              b.email,
+		              r.re_cnt,
+                      t.td_nickname
+		            FROM share_write b  JOIN t_member_detail t ON b.email = t.email              
+		            LEFT OUTER JOIN (SELECT num,COUNT(*) re_cnt
+		                                            FROM share_reply
+		                                            GROUP BY num)r
+		            ON b.num = r.num
+		            <where>
+		            	<if test="keyword != '' and keyfield == 'title'">
+		            		b.title like '%' || #{keyword} || '%'
+		            	</if>
+		            	<if test="keyword != '' and keyfield == 'td_nickname'">
+		            		t.td_nickname like '%' || #{keyword} || '%'
+		            	</if>
+		            	<if test="keyword != '' and keyfield == 'content'">
+		            		b.content like '%' || #{keyword} || '%'
+		            	</if>
+		            	<if test="keyword != '' and keyfield == 'all'">
+		            		b.title like '%' || #{keyword} || '%' or
+		            		t.td_nickname like '%' || #{keyword} || '%' or
+		            		b.content like '%' || #{keyword} || '%'
+		            	</if>
+		            </where>
+		            ORDER BY b.num DESC)a)
+		<![CDATA[
+		WHERE rnum >= #{start} AND rnum <= #{end}
+		]]>               
+	</select>
+	<select id="selectRowCount" parameterType="map" resultType="integer">
+		SELECT
+		   COUNT(*)
+		FROM share_write s
+		JOIN t_member_detail t
+		ON s.email = t.email
+		<where>
+           	<if test="keyword != '' and keyfield == 'title'">
+           		title like '%' || #{keyword} || '%'
+           	</if>
+           	<if test="keyword != '' and keyfield == 'td_nickname'">
+           		td_nickname like '%' || #{keyword} || '%'
+           	</if>
+           	<if test="keyword != '' and keyfield == 'content'">
+           		content like '%' || #{keyword} || '%'
+           	</if>
+           	<if test="keyword != '' and keyfield == 'all'">
+           		title like '%' || #{keyword} || '%' or
+           		td_nickname like '%' || #{keyword} || '%' or
+           		content like '%' || #{keyword} || '%'
+           	</if>
+        </where>                              
+	</select>
+ 	
+ 	<!--부모글 수정-->
+ 	<update id="update" parameterType="shareCommand">
+			UPDATE share_write SET title=#{title},content=#{content},thumb=#{thumb},photo2=#{photo2},photo3=#{photo3} WHERE num=#{num}
+ 	</update>
+ 	
+ 	<!-- 댓글 목록 -->
+ 	<select id="selectListReply" parameterType="map" resultType="shareReplyCommand">
+ 	SELECT 
+ 		sr_num,
+ 		sr_content,
+ 		TO_CHAR(sr_date,'YYYY-MM-DD HH24:MI:SS') sr_date,
+ 		email,
+ 		num 
+ 		FROM (SELECT 
+ 				a.*,
+ 				rownum rnum 
+ 				FROM(SELECT
+ 						*
+	   				FROM share_reply
+					WHERE num = #{num}
+					ORDER BY sr_num DESC)a)
+ 	<![CDATA[
+ 	WHERE rnum >= #{start} AND rnum <= #{end}
+ 	]]>
+ 	</select>
+ 	
+</mapper>
+
+
+
+
+
+
+

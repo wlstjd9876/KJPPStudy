@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+	<definition name="shareList" extends="main"> <!-- 기본 설정을 main에서 상속 받아서 사용함 -->
+    	<put-attribute name="title" value="게시판목록"/>
+    	<put-attribute name="body" value="/WEB-INF/views/share/shareList.jsp"/>
+	</definition>
+	<definition name="shareWrite" extends="main"> <!-- 기본 설정을 main에서 상속 받아서 사용함 -->
+    	<put-attribute name="title" value="글등록"/>
+    	<put-attribute name="body" value="/WEB-INF/views/share/shareWrite.jsp"/>
+	</definition>
+	<definition name="shareDetail" extends="main"> <!-- 기본 설정을 main에서 상속 받아서 사용함 -->
+    	<put-attribute name="title" value="글상세"/>
+    	<put-attribute name="body" value="/WEB-INF/views/share/shareDetail.jsp"/>
+	</definition>
+	<definition name="shareModify" extends="main"> <!-- 기본 설정을 main에서 상속 받아서 사용함 -->
+    	<put-attribute name="title" value="게시판 글 수정"/>
+    	<put-attribute name="body" value="/WEB-INF/views/share/shareModify.jsp"/>
+	</definition>	
+	    
+</tiles-definitions>
+
+

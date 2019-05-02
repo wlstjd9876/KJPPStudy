@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+	<definition name="calendarList" extends="main">
+		<put-attribute name="title" value="일정목록" />
+		<put-attribute name="body" value="/WEB-INF/views/calendar/list.jsp" />
+	</definition>
+	<!-- 일정 -->
+	<definition name="calendarRegisterForm" extends="main">
+		<put-attribute name="title" value="일정관리" />
+		<put-attribute name="body" value="/WEB-INF/views/calendar/registerForm.jsp" />
+	</definition>
+	<definition name="calendarRegisterDetailForm" extends="main">
+		<put-attribute name="title" value="일정완성" />
+		<put-attribute name="body" value="/WEB-INF/views/calendar/finishForm.jsp" />
+	</definition>
+	<definition name="calendarDetail" extends="main">
+		<put-attribute name="title" value="일정완성" />
+		<put-attribute name="body" value="/WEB-INF/views/calendar/view.jsp" />
+	</definition>
+	
+	
+	
+	<!-- 일정 상세 -->
+	<definition name="calendarDetailWriteForm" extends="main">
+		<put-attribute name="title" value="일정등록" />
+		<put-attribute name="body" value="/WEB-INF/views/calendar/writeDetailForm.jsp" />
+	</definition>
+	<definition name="calendarDetailWrite" extends="main">
+		<put-attribute name="title" value="일정등록" />
+		<put-attribute name="body" value="/WEB-INF/views/calendar/writeDetailForm.jsp" />
+	</definition>
+	
+	
+	<!-- 즐겨찾기 -->
+	<definition name="favList" extends="main"> <!-- 기본 설정을 main에서 상속 받아서 사용함 -->
+    	<put-attribute name="title" value="즐겨찾기메인목록"/>
+    	<put-attribute name="body" value="/WEB-INF/views/calendar/favList.jsp"/>
+	</definition>
+	<definition name="favPlace" extends="main">
+    	<put-attribute name="title" value="장소페이징목록"/>
+    	<put-attribute name="body" value="/WEB-INF/views/calendar/favPlace.jsp"/>
+	</definition>
+	<definition name="favSchedule" extends="main">
+    	<put-attribute name="title" value="일정페이징목록"/>
+    	<put-attribute name="body" value="/WEB-INFviews//calendar/favSchedule.jsp"/>
+	</definition>
+	<definition name="favMember" extends="main">
+    	<put-attribute name="title" value="회원페이징목록"/>
+    	<put-attribute name="body" value="/WEB-INF/views/calendar/favMember.jsp"/>
+	</definition>
+	
+ 	<!-- 팝업 -->
+	<definition name="calendarDetailPopupView" extends="popup">
+		<put-attribute name="title" value="일정등록" />
+		<put-attribute name="body" value="/WEB-INF/views/calendar/popup/popupView.jsp" />
+	</definition>
+	<definition name="calendarDetailPopupUpdateForm" extends="popup">
+		<put-attribute name="title" value="일정등록" />
+		<put-attribute name="body" value="/WEB-INF/views/calendar/popup/popupUpdateForm.jsp" />
+	</definition>	
+	<definition name="calendarDetailPopupUpdate" extends="popup">
+		<put-attribute name="title" value="일정등록" />
+		<put-attribute name="body" value="/WEB-INF/views/calendar/popup/popupUpdate.jsp" />
+	</definition>		
+	<definition name="calendarDetailPopupDelete" extends="popup">
+		<put-attribute name="title" value="일정등록" />
+		<put-attribute name="body" value="/WEB-INF/views/calendar/popup/popupDelete.jsp" />
+	</definition>	
+	
+</tiles-definitions>

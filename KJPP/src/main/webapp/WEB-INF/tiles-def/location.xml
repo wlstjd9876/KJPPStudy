@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+	<definition name="location" extends="main">
+		<put-attribute name="title" value="위치" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/data/location.jsp" />
+	</definition>
+	<definition name="chart" extends="main">
+		<put-attribute name="title" value="통계" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/data/chart.jsp" />
+	</definition>	
+</tiles-definitions>	

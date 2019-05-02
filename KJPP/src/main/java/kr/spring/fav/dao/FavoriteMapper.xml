@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper   
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="kr.spring.fav.dao.FavoriteMapper"> <!-- namespace가 인터페이스 경로와 동일해야 함★ -->  
+   <!-- Annotation방식 사용하지 않고, XML 방식 사용한 것! -->
+   <select id="selectList1" parameterType="map" resultType="favoriteCommand"> <!-- id는 호출하는 메서드명과 일치 -->
+      SELECT
+        *
+      FROM (SELECT
+             a.*,
+             rownum rnum
+            FROM (SELECT
+                  f_num,
+                  f_category,
+                  f_code1,
+                  email
+               FROM favorite
+               /*주우우우석*/
+               <where> <!-- 조건이 true인 경우 where 태그 안으로 진입 -->
+					<if test="keyword == '' and keyfield == ''">
+					f_category = 1
+					</if>
+                  <if test="keyword != '' and keyfield == 'f_code1'">
+                     f_category = 1 and f_code1 like '%' || #{keyword} || '%' <!-- 가변문자 % 사용한 like 검색 -->
+                  </if>
+               </where>
+               ORDER BY f_num DESC)a)
+     	<![CDATA[
+		WHERE rnum >= #{start} AND rnum <= #{end}
+		]]>
+   </select>
+   
+   <select id="selectRowCount1" parameterType="map" resultType="integer">
+      SELECT
+        COUNT(*)
+      FROM favorite f <!-- JOIN attraction a
+      ON f.f_code = a.f_code -->
+      <where> <!-- 조건이 true인 경우 where 태그 안으로 진입 -->
+      	<if test="keyword == '' and keyfield == ''">
+		f_category = 1
+		</if>
+        <if test="keyword != '' and keyfield == 'f_code1'">
+        f_category = 1 and f_code1 like '%' || #{keyword} || '%' <!-- 가변문자 % 사용한 like 검색 -->
+        </if>
+      </where>
+   </select>
+   
+	<select id="selectList2" parameterType="map" resultType="favoriteCommand">
+      SELECT
+        *
+      FROM (SELECT
+             a.*,
+             rownum rnum
+            FROM (SELECT
+                  	*
+               FROM favorite f JOIN schedule s
+               ON f.f_code2 = s.s_num
+               JOIN t_member_detail t
+               ON t.email = s.email             
+			<where>
+				<if test="keyword == '' and keyfield == ''">
+				f_category = 2
+				</if>
+				<if test="keyword != '' and keyfield == 's_title'">
+				f_category = 2 and s_title like '%' || #{keyword} || '%'
+				</if>
+				<if test="keyword != '' and keyfield == 's_tag'">
+				f_category = 2 and s_tag like '%' || #{keyword} || '%'
+				</if>
+				<if test="keyword != '' and keyfield == 'td_nickname'">
+				f_category = 2 and td_nickname like '%' || #{keyword} || '%'
+				</if>
+			</where>
+			ORDER BY f_num DESC)a)
+     	<![CDATA[
+		WHERE rnum >= #{start} AND rnum <= #{end}
+		]]>
+   </select>
+   
+   <select id="selectRowCount2" parameterType="map" resultType="integer">
+      SELECT
+        COUNT(*)
+      FROM favorite f JOIN schedule s
+               ON f.f_code2 = s.s_num
+               JOIN t_member_detail t
+               ON t.email = s.email
+      <where>
+      	<if test="keyword == '' and keyfield == ''">
+		f_category = 2
+		</if>
+		<if test="keyword != '' and keyfield == 's_title'">
+		f_category = 2 and s_title like '%' || #{keyword} || '%'
+		</if>
+		<if test="keyword != '' and keyfield == 's_tag'">
+		f_category = 2 and s_tag like '%' || #{keyword} || '%'
+		</if>
+		<if test="keyword != '' and keyfield == 'td_nickname'">
+		f_category = 2 and td_nickname like '%' || #{keyword} || '%'
+		</if>
+      </where>
+   </select>
+   
+   <select id="selectList3" parameterType="map" resultType="favoriteCommand"> <!-- id는 호출하는 메서드명과 일치 -->
+      SELECT
+        *
+      FROM (SELECT
+             a.*,
+             rownum rnum
+            FROM (SELECT
+                  	*
+               FROM favorite f JOIN t_member_detail t
+               ON f.f_code3 = t.email
+			<where>
+				<if test="keyword == '' and keyfield == ''">
+				f_category = 3
+				</if>
+				<if test="keyword != '' and keyfield == 'td_nickname'">
+				f_category = 3 and td_nickname like '%' || #{keyword} || '%'
+				</if>
+				<if test="keyword != '' and keyfield == 'email'">
+				f_category = 3 and email like '%' || #{keyword} || '%'
+				</if>
+				<if test="keyword != '' and keyfield == 'td_score'">
+				f_category = 3 and td_score like '%' || #{keyword} || '%'
+				</if>
+			</where>
+			ORDER BY f_num DESC)a)
+     	<![CDATA[
+		WHERE rnum >= #{start} AND rnum <= #{end}
+		]]>
+   </select>
+   
+   <select id="selectRowCount3" parameterType="map" resultType="integer">
+      SELECT
+        COUNT(*)
+      FROM favorite f JOIN t_member_detail t
+      ON f.f_code3 = t.email
+		<where>
+			<if test="keyword == '' and keyfield == ''">
+				f_category = 3
+				</if>
+				<if test="keyword != '' and keyfield == 'td_nickname'">
+				f_category = 3 and td_nickname like '%' || #{keyword} || '%'
+				</if>
+				<if test="keyword != '' and keyfield == 'email'">
+				f_category = 3 and email like '%' || #{keyword} || '%'
+				</if>
+				<if test="keyword != '' and keyfield == 'td_score'">
+				f_category = 3 and td_score like '%' || #{keyword} || '%'
+				</if>
+      </where>
+   </select>
+      
+</mapper>

@@ -1,0 +1,197 @@
+/*폰트 설정 시작*/
+@import url(//fonts.googleapis.com/earlyaccess/hanna.css);
+
+.hn {
+	font-family: 'Hanna', sans-serif;
+}
+.loc-font{
+	font-size: 20px;
+}
+/*폰트 설정 끝*/
+/*정렬*/
+.align-center {
+	text-align: center;
+}
+
+.margin-both {
+	padding: 20px;
+}
+/*div 크기*/
+div#contents {
+	padding: 0 200px;
+}
+
+div.js_center {
+	margin: 0 auto;
+}
+
+div.search_js {
+	width: 100%;
+}
+
+div#search_form {
+	width: 500px;
+	margin: 0 auto;
+}
+
+.sel_box {
+	width: 49%;
+	display: inline-block;
+}
+
+.data_list {
+	min-height: 500px;
+	z-index: 1;
+}
+
+h1 {
+	text-align: center;
+}
+
+.search-box-container {
+	display: inline-block;
+	box-sizing: content-box;
+	height: 50px;
+	width: 50px;
+	padding: 0;
+	background-color: #fff;
+	border: 3px solid #f44336;
+	border-radius: 28px;
+	overflow: hidden;
+}
+
+.search-box-container * {
+	display: inline-block;
+	margin: 0;
+	height: 100%;
+	padding: 5px;
+	border: 0;
+	outline: none;
+}
+
+.search-box {
+	width: calc(100% - 50px);
+	padding: 0 20px;
+	float: left;
+	font-family: "Lato";
+	font-size: 1em;
+	color: #212121;
+	background-color: #fff;
+}
+
+.submit {
+	float: right;
+	width: 50px;
+	left: 0;
+	top: 0;
+	font-size: 1.2em;
+	text-align: center;
+	cursor: pointer;
+	background-color: #fff;
+}
+
+.fa {
+	display: inline !important;
+	line-height: 100%;
+	pointer-event: none;
+	color: #d32f2f;
+}
+/*버튼*/
+.paging_button{
+	padding: 0px;
+	margin: 0px;
+	height: 40px;
+}
+.myButton {
+	margin:0 5px;
+	background:linear-gradient(to bottom, #79bbff 5%, #378de5 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#79bbff', endColorstr='#378de5',GradientType=0);
+	background-color:#79bbff;
+	border-radius:42px;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:17px;
+	padding:4px 12px;
+	text-decoration:none;
+}
+.selbtn{
+	background:linear-gradient(to bottom, #fc8d83 5%, #e4685d 100%);
+}
+.myButton:hover {
+	background:linear-gradient(to bottom, #378de5 5%, #79bbff 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#378de5', endColorstr='#79bbff',GradientType=0);
+	background-color:#378de5;
+}
+.myButton:active {
+	position:relative;
+	top:1px;
+}
+
+
+/*택스트박스 , 신청폼*/
+input[type=text], select {
+	width: 100%;
+	padding: 10px 10px;
+	margin: 0px 0px;
+	display: inline-block;
+	border: 1px solid #ccc;
+	border-radius: 10px;
+	box-sizing: border-box;
+}
+
+.div {
+	position: relative;
+}
+h4{
+	height: 38px;
+}
+h3{
+	height: 78px;
+}
+
+.vc {
+	height: 47px;
+	left: 65px;
+} /* 세로 중앙 정렬 */
+
+/*레이아웃 페이지별*/
+div#Menu-tab1{
+	border-top-left-radius: 4px;
+	border-bottom-left-radius: 4px;
+}
+div#Menu-tab4{
+	border-top-right-radius: 4px;
+	border-bottom-right-radius: 4px;
+}
+div.Menu-tab{
+	width: 33%;
+	height: 60px;
+	cursor:pointer;
+	background-color: rgb(94, 94, 94);
+	float:left;
+	font-size: 26px;
+	color: rgb(255, 255, 255);
+	text-align: center;
+	line-height: 2.2em;	
+}
+div.Menu-tab:hover{
+	background-color: #3D3232;
+}
+div.tab-active{
+	background-color: #3D3232;
+}
+div.headerMenu{
+	margin:0 auto;
+	width: 895px;
+	height:60px;
+}
+div.view{
+	margin:0 auto;
+	width: 895px;
+	min-height: 700px;	
+}
+.view-font{
+	font-size: 30px;
+}

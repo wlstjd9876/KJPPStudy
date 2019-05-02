@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper   
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="kr.spring.advice.dao.AdviceMapper">  
+
+   <select id="selectList" parameterType="map" resultType="adviceCommand">
+   
+      SELECT
+        *
+      FROM (SELECT
+            a.*,
+            rownum rnum
+           FROM (SELECT
+                   b.adv_num,
+                   <![CDATA[
+                   REPLACE(REPLACE(b.adv_title,'<','&lt;'),'>','&gt;') adv_title,                   
+                   ]]>
+                   b.email,
+                   b.adv_date,
+                   r.re_cnt
+                 FROM advice b LEFT OUTER JOIN (SELECT adv_num,COUNT(*) re_cnt
+                                         FROM advice_reply
+                                         GROUP BY adv_num)r
+                 ON b.adv_num = r.adv_num
+                 <!-- where절이 동적으로 들어가는것이다. -->
+                 <where>
+                    <if test="keyword != '' and keyfield == 'adv_title'">
+                       b.adv_title like '%' || #{keyword} || '%'
+                    </if>
+                    <if test="keyword != '' and keyfield == 'email'">
+                       b.email like '%' || #{keyword} || '%'
+                    </if>
+                    <if test="keyword != '' and keyfield == 'all'">
+                       b.adv_title like '%' || #{keyword} || '%' or 
+                       b.email like '%' || #{keyword} || '%' or
+                    </if>
+                 </where>
+                 ORDER BY b.adv_num DESC)a)
+      
+      <![CDATA[
+      WHERE rnum >= #{start} AND rnum <= #{end}
+      ]]>               
+   
+   </select>
+   <select id="selectRowCount" parameterType="map" resultType="integer">
+      
+      SELECT
+         COUNT(*)
+      FROM advice
+      
+      <!-- sql문 2개를 쓰는것을 하나로 줄일수있다. -->
+      <where>
+           <if test="keyword != '' and keyfield == 'adv_title'">
+              adv_title like '%' || #{keyword} || '%'
+           </if>
+           <if test="keyword != '' and keyfield == 'email'">
+              email like '%' || #{keyword} || '%'
+           </if>
+           <if test="keyword != '' and keyfield == 'all'">
+              adv_title like '%' || #{keyword} || '%' or 
+              email like '%' || #{keyword} || '%' or
+           </if>
+        </where>
+   </select>
+   
+	<!-- 댓글 목록 -->
+	<select id="selectListReply" parameterType="map" resultType="adviceReplyCommand">
+	SELECT 
+ 		adv_num,
+ 		email,
+ 		TO_CHAR(ar_date,'YYYY-MM-DD HH24:MI:SS') ar_date,
+ 		startdate,
+ 		enddate,
+ 		ar_comment,
+ 		ar_num
+ 		FROM (SELECT 
+ 				a.*,
+ 				rownum rnum 
+ 				FROM (SELECT
+ 						*
+	   				FROM advice_reply
+					WHERE adv_num = #{adv_num}
+					ORDER BY ar_num DESC)a)
+	<![CDATA[
+ 	WHERE rnum >= #{start} AND rnum <= #{end}
+ 	]]>
+ 	</select>
+</mapper>

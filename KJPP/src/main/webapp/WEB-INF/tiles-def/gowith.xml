@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+	<definition name="gowithList" extends="main">
+		<put-attribute name="title" value="함께 떠나요" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/gowith/gowithList.jsp" />
+	</definition>
+	<definition name="gowithRegister" extends="main">
+		<put-attribute name="title" value="함께 떠나요" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/gowith/gowithRegister.jsp" />
+	</definition>
+	<definition name="gowithRegisterDetail" extends="main">
+		<put-attribute name="title" value="함께 떠나요" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/gowith/gowithRegisterDetail.jsp" />
+	</definition>
+	<definition name="gowithappList" extends="main">
+		<put-attribute name="title" value="함께 떠나요" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/gowith/goappWrite.jsp" />
+	</definition>
+	<definition name="gowithModify" extends="main">
+		<put-attribute name="title" value="함께 떠나요" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/gowith/gowithModify.jsp" />
+	</definition>
+
+</tiles-definitions>	  

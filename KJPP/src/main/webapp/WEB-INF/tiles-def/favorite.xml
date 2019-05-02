@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+	<definition name="favList" extends="main"> <!-- 기본 설정을 main에서 상속 받아서 사용함 -->
+    	<put-attribute name="title" value="즐겨찾기메인목록"/>
+    	<put-attribute name="body" value="/WEB-INF/views/calendar/favList.jsp"/>
+	</definition>
+	<definition name="favPlace" extends="main">
+    	<put-attribute name="title" value="장소페이징목록"/>
+    	<put-attribute name="body" value="/WEB-INF/views/calendar/favPlace.jsp"/>
+	</definition>
+	<definition name="favSchedule" extends="main">
+    	<put-attribute name="title" value="일정페이징목록"/>
+    	<put-attribute name="body" value="/WEB-INF/views/calendar/favSchedule.jsp"/>
+	</definition>
+	<definition name="favMember" extends="main">
+    	<put-attribute name="title" value="회원페이징목록"/>
+    	<put-attribute name="body" value="/WEB-INF/views/calendar/favMember.jsp"/>
+	</definition>
+	
+	
+	
+<!-- 	<definition name="boardWrite" extends="main">
+    	<put-attribute name="title" value="글등록"/>
+    	<put-attribute name="body" value="/WEB-INF/views/board/boardWrite.jsp"/>
+	</definition>
+	<definition name="boardView" extends="main"> 
+    	<put-attribute name="title" value="글상세"/>
+    	<put-attribute name="body" value="/WEB-INF/views/board/boardView.jsp"/>
+	</definition>
+	<definition name="boardModify" extends="main"> 
+    	<put-attribute name="title" value="게시판 글 수정"/>
+    	<put-attribute name="body" value="/WEB-INF/views/board/boardModify.jsp"/>
+	</definition>
+ -->	    
+</tiles-definitions>
+
+

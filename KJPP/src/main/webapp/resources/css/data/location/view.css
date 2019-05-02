@@ -1,0 +1,71 @@
+/*폰트 설정 시작*/
+@import url(//fonts.googleapis.com/earlyaccess/hanna.css);
+
+.hn {
+	font-family: 'Hanna', sans-serif;
+}
+.loc-font{
+	font-size: 20px;
+}
+/*폰트 설정 끝*/
+/*정렬*/
+.align-center {
+	text-align: center;
+}
+
+.margin-both {
+	padding: 20px;
+}
+/*div 크기*/
+div#contents {
+	padding: 0 200px;
+}
+
+div.js_center {
+	margin: 0 auto;
+}
+
+.vc {
+	height: 47px;
+	left: 65px;
+} /* 세로 중앙 정렬 */
+
+/*레이아웃 페이지별*/
+div#Menu-tab1{
+	border-top-left-radius: 4px;
+	border-bottom-left-radius: 4px;
+}
+div#Menu-tab4{
+	border-top-right-radius: 4px;
+	border-bottom-right-radius: 4px;
+}
+div.Menu-tab{
+	width: 33%;
+	height: 60px;
+	cursor:pointer;
+	background-color: rgb(94, 94, 94);
+	float:left;
+	font-size: 26px;
+	color: rgb(255, 255, 255);
+	text-align: center;
+	line-height: 2.2em;	
+}
+div.Menu-tab:hover{
+	background-color: #3D3232;
+}
+div.tab-active{
+	background-color: #3D3232;
+}
+div.headerMenu{
+	margin:0 auto;
+	width: 895px;
+	height:60px;
+}
+div.view{
+	margin:0 auto;
+	width: 895px;
+	min-height: 700px;	
+}
+.view-font{
+	font-size: 30px;
+}
